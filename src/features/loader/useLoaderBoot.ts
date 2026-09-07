@@ -5,13 +5,15 @@ import {
   preloadImages,
   waitForElement,
   waitForImages,
+  warmImages,
 } from '@/shared/lib/preload'
 import { scrambleInto } from '@/shared/lib/scrambleText'
 import {
   MIN_GATE_MS,
   MIN_GATE_REDUCED_MS,
   STATUS_BEATS,
-  CRITICAL_ASSETS,
+  DEFERRED_ASSETS,
+  GATE_ASSETS,
   type LoaderProps,
 } from './constants'
 
@@ -25,17 +27,19 @@ export function useLoaderBoot(
   { onReveal, onComplete }: LoaderProps,
   refs: Refs,
 ) {
+  // Refs are stable; the wrapper object is not. Depend on the refs themselves.
+  const { rootRef, brandRef, statusRef } = refs
   const [progress, setProgress] = useState(0)
   const [beat, setBeat] = useState(0)
 
   useEffect(() => {
-    if (!refs.statusRef.current) return
+    if (!statusRef.current) return
     const label = STATUS_BEATS[beat] ?? STATUS_BEATS[0]
-    return scrambleInto(refs.statusRef.current, label, {
+    return scrambleInto(statusRef.current, label, {
       duration: 0.32,
       charStagger: 0.025,
     })
-  }, [beat, refs.statusRef])
+  }, [beat, statusRef])
 
   useEffect(() => {
     const reduce = prefersReducedMotion()
@@ -51,7 +55,7 @@ export function useLoaderBoot(
     onReveal()
 
     cleanups.push(
-      scrambleInto(refs.brandRef.current, 'NIDUS', {
+      scrambleInto(brandRef.current, 'NIDUS', {
         delay: 0.1,
         duration: 0.65,
         charStagger: 0.06,
@@ -59,7 +63,7 @@ export function useLoaderBoot(
     )
 
     void (async () => {
-      await preloadImages(CRITICAL_ASSETS, (ratio) => {
+      await preloadImages(GATE_ASSETS, (ratio) => {
         if (cancelled) return
         assetRatio = ratio
       })
@@ -72,13 +76,16 @@ export function useLoaderBoot(
 
       assetsReady = true
       assetRatio = 1
+
+      // Collection is a scroll away — warm it behind the gate, never block on it.
+      warmImages(DEFERRED_ASSETS)
     })()
 
     const runExit = () => {
       if (exiting) return
       exiting = true
 
-      const root = refs.rootRef.current
+      const root = rootRef.current
       if (!root) {
         onComplete()
         return
@@ -127,7 +134,7 @@ export function useLoaderBoot(
       cancelAnimationFrame(raf)
       cleanups.forEach((fn) => fn())
     }
-  }, [onComplete, onReveal])
+  }, [onComplete, onReveal, brandRef, rootRef])
 
   return { progress }
 }

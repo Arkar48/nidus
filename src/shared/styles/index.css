@@ -69,5 +69,6 @@
 
 @import "./sections/loader.css";
 @import "./sections/hero.css";
+@import "./sections/gallery.css";
 
 @import "./foundation/reduced-motion.css";

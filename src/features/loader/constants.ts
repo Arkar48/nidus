@@ -13,16 +13,16 @@ export const STATUS_BEATS = [
   'opening',
 ] as const
 
-export const MIN_GATE_MS = 3200
+/** Floor, so a warm cache doesn't flash the loader for 90ms. */
+export const MIN_GATE_MS = 2400
 export const MIN_GATE_REDUCED_MS = 900
 
-export const CRITICAL_ASSETS = Array.from(
-  new Set([
-    ...HERO_LAYERS.map((layer) => layer.src),
-    ...SPACE_SHOTS.map((shot) => shot.src),
-    '/space/nebula-1.jpg',
-    '/parallax/planet.png',
-  ]),
+/** The gate blocks on these — nothing is painted until they decode. */
+export const GATE_ASSETS = Array.from(
+  new Set(HERO_LAYERS.map((layer) => layer.src)),
 )
 
-export const TOTAL_ASSETS = CRITICAL_ASSETS.length
+/** Warmed at low priority once the gate lifts; the collection is a scroll away. */
+export const DEFERRED_ASSETS = Array.from(
+  new Set(SPACE_SHOTS.map((shot) => shot.src)),
+).filter((src) => !GATE_ASSETS.includes(src))

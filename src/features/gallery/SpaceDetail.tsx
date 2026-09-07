@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState, type MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 import type { SpaceShot } from '@/content/space'
 import { TraitChip } from './TraitChip'
@@ -42,19 +42,11 @@ const traitItemVariants = {
 }
 
 export function SpaceDetail({ shot, onClose }: Props) {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
   const dismissUnlessKeep = (event: MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement | null
     if (target?.closest(KEEP_SELECTOR)) return
     onClose()
   }
-
-  if (!mounted) return null
 
   return createPortal(
     <AnimatePresence>

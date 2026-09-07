@@ -1,7 +1,14 @@
 @media (prefers-reduced-motion: reduce) {
   .space-card,
+  .space-card__img,
+  .space-card__glow,
   .space-detail__trait {
     transition: none !important;
+  }
+
+  .space-card:hover .space-card__img,
+  .space-card:focus-visible .space-card__img {
+    transform: none;
   }
 
   .hero__layer,

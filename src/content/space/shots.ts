@@ -8,7 +8,7 @@ export type SpaceShot = {
 export const SPACE_SHOTS: SpaceShot[] = [
   {
     id: '0041',
-    src: '/space/nest-astronaut.png',
+    src: '/space/nest-astronaut.webp',
     name: 'NIDUS#0041',
     traits: [
       { label: 'subject', value: 'Astronaut' },
@@ -20,7 +20,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0112',
-    src: '/space/nest-ship.png',
+    src: '/space/nest-ship.webp',
     name: 'NIDUS#0112',
     traits: [
       { label: 'subject', value: 'Spaceship' },
@@ -32,7 +32,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0208',
-    src: '/space/nest-asteroid.png',
+    src: '/space/nest-asteroid.webp',
     name: 'NIDUS#0208',
     traits: [
       { label: 'subject', value: 'Asteroid' },
@@ -44,7 +44,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0330',
-    src: '/space/nest-alien.png',
+    src: '/space/nest-alien.webp',
     name: 'NIDUS#0330',
     traits: [
       { label: 'subject', value: 'Alien' },
@@ -56,7 +56,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0444',
-    src: '/space/nest-planet.png',
+    src: '/space/nest-planet.webp',
     name: 'NIDUS#0444',
     traits: [
       { label: 'subject', value: 'Planet' },
@@ -68,7 +68,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0517',
-    src: '/space/nest-mars.png',
+    src: '/space/nest-mars.webp',
     name: 'NIDUS#0517',
     traits: [
       { label: 'subject', value: 'Surface' },
@@ -80,7 +80,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0622',
-    src: '/space/nest-ufo.png',
+    src: '/space/nest-ufo.webp',
     name: 'NIDUS#0622',
     traits: [
       { label: 'subject', value: 'UFO' },
@@ -92,7 +92,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0701',
-    src: '/space/nest-satellite.png',
+    src: '/space/nest-satellite.webp',
     name: 'NIDUS#0701',
     traits: [
       { label: 'subject', value: 'Satellite' },
@@ -104,7 +104,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0814',
-    src: '/space/nest-alien-b.png',
+    src: '/space/nest-alien-b.webp',
     name: 'NIDUS#0814',
     traits: [
       { label: 'subject', value: 'Alien' },
@@ -116,7 +116,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '0920',
-    src: '/space/nest-rocket.png',
+    src: '/space/nest-rocket.webp',
     name: 'NIDUS#0920',
     traits: [
       { label: 'subject', value: 'Rocket' },
@@ -128,7 +128,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1033',
-    src: '/space/nest-astronaut-b.png',
+    src: '/space/nest-astronaut-b.webp',
     name: 'NIDUS#1033',
     traits: [
       { label: 'subject', value: 'Astronaut' },
@@ -140,7 +140,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1148',
-    src: '/space/nest-comet.png',
+    src: '/space/nest-comet.webp',
     name: 'NIDUS#1148',
     traits: [
       { label: 'subject', value: 'Comet' },
@@ -152,7 +152,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1205',
-    src: '/space/cartoon-spaceship.png',
+    src: '/space/cartoon-spaceship.webp',
     name: 'NIDUS#1205',
     traits: [
       { label: 'subject', value: 'Cruiser' },
@@ -164,7 +164,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1311',
-    src: '/space/cartoon-astronaut.png',
+    src: '/space/cartoon-astronaut.webp',
     name: 'NIDUS#1311',
     traits: [
       { label: 'subject', value: 'Walker' },
@@ -176,7 +176,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1426',
-    src: '/space/cartoon-planet.png',
+    src: '/space/cartoon-planet.webp',
     name: 'NIDUS#1426',
     traits: [
       { label: 'subject', value: 'Orb' },
@@ -188,7 +188,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1502',
-    src: '/space/cartoon-ufo.png',
+    src: '/space/cartoon-ufo.webp',
     name: 'NIDUS#1502',
     traits: [
       { label: 'subject', value: 'Disc' },
@@ -200,7 +200,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1639',
-    src: '/space/cartoon-alien.png',
+    src: '/space/cartoon-alien.webp',
     name: 'NIDUS#1639',
     traits: [
       { label: 'subject', value: 'Visitor' },
@@ -212,7 +212,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1744',
-    src: '/space/cartoon-rocket.png',
+    src: '/space/cartoon-rocket.webp',
     name: 'NIDUS#1744',
     traits: [
       { label: 'subject', value: 'Booster' },
@@ -224,7 +224,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1850',
-    src: '/space/galaxy-1.jpg',
+    src: '/space/galaxy-1.webp',
     name: 'NIDUS#1850',
     traits: [
       { label: 'subject', value: 'Earthrise' },
@@ -236,7 +236,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '1918',
-    src: '/space/nebula-1.jpg',
+    src: '/space/nebula-1.webp',
     name: 'NIDUS#1918',
     traits: [
       { label: 'subject', value: 'Nebula' },
@@ -248,7 +248,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '2027',
-    src: '/space/moon-1.jpg',
+    src: '/space/moon-1.webp',
     name: 'NIDUS#2027',
     traits: [
       { label: 'subject', value: 'Moon' },
@@ -260,7 +260,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '2140',
-    src: '/space/planet-1.jpg',
+    src: '/space/planet-1.webp',
     name: 'NIDUS#2140',
     traits: [
       { label: 'subject', value: 'World' },
@@ -272,7 +272,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '2255',
-    src: '/space/spaceship-1.png',
+    src: '/space/spaceship-1.webp',
     name: 'NIDUS#2255',
     traits: [
       { label: 'subject', value: 'Freighter' },
@@ -284,7 +284,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '2309',
-    src: '/space/astronaut-1.jpg',
+    src: '/space/astronaut-1.webp',
     name: 'NIDUS#2309',
     traits: [
       { label: 'subject', value: 'EVA' },
@@ -296,7 +296,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '2804',
-    src: '/space/galaxy-2.jpg',
+    src: '/space/galaxy-2.webp',
     name: 'NIDUS#2804',
     traits: [
       { label: 'subject', value: 'Spiral' },
@@ -308,7 +308,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '2912',
-    src: '/space/nebula-2.jpg',
+    src: '/space/nebula-2.webp',
     name: 'NIDUS#2912',
     traits: [
       { label: 'subject', value: 'Bloom' },
@@ -320,7 +320,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '3020',
-    src: '/space/asteroid-2.png',
+    src: '/space/asteroid-2.webp',
     name: 'NIDUS#3020',
     traits: [
       { label: 'subject', value: 'Shard' },
@@ -332,7 +332,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '3144',
-    src: '/space/spaceship-2.png',
+    src: '/space/spaceship-2.webp',
     name: 'NIDUS#3144',
     traits: [
       { label: 'subject', value: 'Scout' },
@@ -344,7 +344,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '3251',
-    src: '/space/planet-2.jpg',
+    src: '/space/planet-2.webp',
     name: 'NIDUS#3251',
     traits: [
       { label: 'subject', value: 'Sphere' },
@@ -356,7 +356,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '3360',
-    src: '/space/alien-1.png',
+    src: '/space/alien-1.webp',
     name: 'NIDUS#3360',
     traits: [
       { label: 'subject', value: 'Contact' },
@@ -368,7 +368,7 @@ export const SPACE_SHOTS: SpaceShot[] = [
   },
   {
     id: '3472',
-    src: '/space/stars-1.jpg',
+    src: '/space/stars-1.webp',
     name: 'NIDUS#3472',
     traits: [
       { label: 'subject', value: 'Field' },

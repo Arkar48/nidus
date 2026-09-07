@@ -68,7 +68,7 @@ export function Gallery() {
                 <button
                   key={shot.key}
                   type="button"
-                  className="space-card relative z-1 aspect-square w-[min(26vw,260px)] shrink-0 cursor-pointer overflow-hidden rounded-[18px] border-0 bg-void-soft p-0 [transform:translateZ(0)] max-[960px]:w-[min(28vw,180px)] max-[960px]:rounded-[14px] max-sm:w-[min(34vw,148px)] max-sm:rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-pink-focus"
+                  className="space-card group relative z-1 aspect-square w-[min(26vw,260px)] shrink-0 cursor-pointer overflow-hidden rounded-[18px] border-0 bg-void-soft p-0 [transform:translateZ(0)] max-[960px]:w-[min(28vw,180px)] max-[960px]:rounded-[14px] max-sm:w-[min(34vw,148px)] max-sm:rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-pink-focus"
                   aria-label={`Open ${shot.name}`}
                   onClick={() => setActive(shot)}
                 >
@@ -77,7 +77,11 @@ export function Gallery() {
                     alt=""
                     draggable={false}
                     loading="lazy"
-                    className="pointer-events-none block size-full object-cover select-none"
+                    className="space-card__img pointer-events-none block size-full object-cover select-none"
+                  />
+                  <span
+                    className="space-card__glow pointer-events-none absolute inset-0"
+                    aria-hidden="true"
                   />
                 </button>
               ))}

@@ -9,14 +9,14 @@ export type HeroLayer = {
 export const HERO_LAYERS: readonly HeroLayer[] = [
   {
     id: 'planet',
-    src: '/parallax/planet.png',
+    src: '/parallax/planet.webp',
     className: 'hero__layer hero__layer--planet',
     depth: 0.2,
     scrollY: -40,
   },
   {
     id: 'moon-land',
-    src: '/parallax/moon-land.png',
+    src: '/parallax/moon-land.webp',
     className: 'hero__layer hero__layer--land',
     depth: 0.55,
     scrollY: -110,

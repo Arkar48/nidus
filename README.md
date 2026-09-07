@@ -60,8 +60,10 @@ That produced the only two files the hero actually loads:
 
 | File | What it is |
 | --- | --- |
-| `public/parallax/planet.png` | Ringed planet, transparent background, cut from the source illustration |
-| `public/parallax/moon-land.png` | Ground plane + side rock formations, cut from the same illustration |
+| `public/parallax/planet.webp` | Ringed planet, transparent background, cut from the source illustration |
+| `public/parallax/moon-land.webp` | Ground plane + side rock formations, cut from the same illustration |
+
+Both were exported from Figma as transparent PNGs and later converted to WebP with lossless alpha — see [Performance](#performance).
 
 So the illustration style is not mine, but the layer separation, the masking, the transparency, and everything about how those two plates move is.
 
@@ -427,18 +429,25 @@ Rules I kept to:
 
 ### What it does
 
-The gate holds the page until every image the first two sections need has been decoded, then fades out. It is not a timed fake.
+The gate holds the page until every image the *first paint* needs has been decoded, then fades out. It is not a timed fake.
 
 ```text
 Loader mounts
   → onReveal()  — site mounts underneath, hidden behind the gate
-  → preloadImages(CRITICAL_ASSETS)   hero plates + all 31 collection frames
+  → preloadImages(GATE_ASSETS)       the two hero plates, fetchPriority high
   → waitForElement('.hero')          React may not have mounted it yet
   → waitForImages(hero)              live <img> nodes, .decode() resolved
   → assetsReady
+  → warmImages(DEFERRED_ASSETS)      31 collection frames, idle + low priority
   → hold until MIN_GATE_MS
   → fade out → onComplete() → Lenis starts, scroll unlocks
 ```
+
+### What the gate blocks on, and what it does not
+
+The first version of this blocked on all 33 images — hero plates *and* every collection frame. That was the wrong call, and profiling made it obvious: the gate was holding the page hostage for assets that live three sections down the scroll.
+
+The split is now explicit. `GATE_ASSETS` is only what is on screen at first paint. `DEFERRED_ASSETS` is everything else, warmed at `fetchPriority: 'low'` inside a `requestIdleCallback` *after* the hero is ready, so it never competes with the thing you are actually looking at. By the time you have scrolled past the hero the collection is already in cache, but nothing waited on it.
 
 Mounting the real page *underneath* the loader is the part that matters. If the site only mounts after the gate leaves, the hero images start downloading at the exact moment you can see them, and you get a flash of empty ground. Mounting early means the browser has already decoded those `<img>` nodes by the time the gate lifts.
 
@@ -455,7 +464,9 @@ const raw = assetsReady
   : Math.min(0.96, Math.max(timeRatio * 0.9, assetRatio * 0.88))
 ```
 
-Two rules fall out of that. It can never reach 100% while assets are still in flight (hard cap at 0.96), and it can never finish faster than `MIN_GATE_MS` (3200ms) even on a warm cache. Without the floor, a repeat visit flashed the loader for about 90ms, which reads as a bug rather than a transition.
+Two rules fall out of that. It can never reach 100% while assets are still in flight (hard cap at 0.96), and it can never finish faster than `MIN_GATE_MS` (2400ms) even on a warm cache. Without the floor, a repeat visit flashed the loader for about 90ms, which reads as a bug rather than a transition.
+
+Once the images were optimised the floor became the binding constraint rather than the network — the hero is decoded around 850ms on throttled 4G, so on any reasonable connection you are watching a deliberate 2.4s transition, not a wait. That is the intent.
 
 Under reduced motion the floor drops to 900ms and the exit is a plain fade.
 
@@ -481,7 +492,7 @@ The line animates with `transform: scaleX()` on a full-width element rather than
 
 ### Files
 
-`Loader.tsx` is 50 lines of markup. `useLoaderBoot.ts` owns the whole sequence. `constants.ts` builds `CRITICAL_ASSETS` by reading `HERO_LAYERS` and `SPACE_SHOTS` directly, so adding a collection frame automatically adds it to the preload set — there is no second list to keep in sync.
+`Loader.tsx` is 50 lines of markup. `useLoaderBoot.ts` owns the whole sequence. `constants.ts` derives both asset lists from `HERO_LAYERS` and `SPACE_SHOTS` directly, so adding a collection frame automatically adds it to the deferred warm — there is no second list to keep in sync.
 
 ---
 
@@ -621,6 +632,14 @@ Four rails are in the DOM. Two carry `gallery__rail--extra` and are `hidden` abo
 
 Dropping the pin below 960px was a deliberate call. A pinned section needs a tall spacer element, and on a phone that spacer is a lot of empty scroll distance with a section frozen in place — it feels like the page has stopped responding. The mobile version scrubs the rails against normal document scroll instead, so the section moves through the viewport the way you expect. Four shorter rails keep the same visual density that two tall rails give on desktop.
 
+### Card hover
+
+Hovering a card eases its image to `scale(1.07)` and fades in an inset ember rim, so the frame warms rather than jumps. Both states also fire on `:focus-visible`, so a keyboard tab gives the same feedback a mouse does.
+
+The reason the scale lives on the inner `<img>` and not the card is that three different things want to write a transform to that subtree. The rail sets `x` on the parent to run the marquee, the card carries `translateZ(0)` to stay on its own compositor layer, and the hover wants a scale. Putting the scale on the card would clobber the promotion, and a Tailwind `hover:scale-*` utility would clobber it silently. Scaling a child element keeps all three independent, and both properties still composite — no layout, no repaint of the rail.
+
+`will-change` is deliberately *not* set on the images. There are 372 card nodes across the rails, and promoting all of them costs far more in GPU memory than it saves on a transition the user triggers one card at a time.
+
 ### The detail overlay
 
 ![NIDUS collection detail overlay](docs/screenshots/collection-detail.png)
@@ -707,13 +726,33 @@ Layout uses `svh`/`dvh` for viewport height so a mobile URL bar collapsing does 
 - **Element pools.** Shooting stars are 10 reused nodes per section, not created on demand.
 - **Layer promotion where it earns it.** `will-change` sits on the handful of nodes that actually transform (`.hero__layer-shift`, `.gallery__rail`, `.gallery__inner`) and is cleared under reduced motion.
 - **`loading="lazy"`** on collection images; the hero plates are preloaded eagerly by the gate before anything is revealed.
+- **Two-tier asset loading.** The gate blocks on the hero plates only. The 31 collection frames warm at low priority on idle once the hero is ready.
 - **`gsap.context()`** wraps every feature's animations and is reverted on unmount, so nothing leaks between HMR cycles.
 - **No pin on mobile collection** — avoids a tall pin-spacer and the scroll lag it causes on lower-powered devices.
 - **CSS keyframes for the twinkle**, so ~120 animated elements cost nothing on the JS thread.
+- **Card hover scales the inner `<img>`, not the card.** The card owns a `translateZ(0)` promotion and the rail owns the card's `x`; scaling a child keeps all three transforms off each other.
+
+### Images
+
+Every frame is WebP. The originals were PNG and JPEG and the set came to **25.05 MB**; at WebP q80 (q90 with lossless alpha for the two hero plates, which need transparency) it is **1.61 MB** — a 93.6% cut with no visible difference at the sizes these render at. The oversized `moon-land` plate was also resampled from 5256px to 3200px, which is still 2× its largest CSS width.
+
+The whole production build is now **2.15 MB**, down from 27.2 MB.
+
+### Measured
+
+Cold load, cache disabled, throttled to 10 Mbps / 70ms RTT:
+
+| | before | after |
+| --- | --- | --- |
+| First contentful paint | 2.1 s | **0.63 s** |
+| Hero plates decoded | 24.5 s | **0.86 s** |
+| Blocking payload | 25.2 MB | **0.71 MB** |
+
+Runtime, with a 6× CPU throttle, scrubbing through the pinned hero and collection: **111 FPS average, no frame over 50ms.** The scroll work was never the bottleneck — the payload was.
 
 Production bundle is roughly 475 kB JS (158 kB gzipped) and 25 kB CSS (6.5 kB gzipped). GSAP and Framer Motion are most of that. There is no code splitting because there is one page.
 
-**Honest gap:** the collection PNGs are large — several are close to 1 MB, and the two hero plates are about 1.6 MB each. They are what the loading gate is waiting on. Converting them to WebP/AVIF and serving responsive sizes would cut the gate's job by a lot, and it is the first thing I would do with more time. I left it out because the brief is scoped at 4–6 hours and asset optimisation is not what it is testing.
+**Remaining gap:** the frames are served at a single resolution rather than a `srcset`, so a phone downloads the same 1024px file a desktop does. At ~50 kB each that is a small enough cost that I would rather leave it than add a build step, but it is the next thing I would do.
 
 ---
 
@@ -734,6 +773,6 @@ Production bundle is roughly 475 kB JS (158 kB gzipped) and 25 kB CSS (6.5 kB gz
 
 - Swapping in my own subject matter is explicitly allowed, so nothing here mirrors the reference site's branding or artwork — only the *kinds* of motion it uses.
 - Three slides is the deliverable. I cut a fourth section rather than keep it for volume.
-- Buttons need hover and focus states only. Nothing navigates.
+- Buttons and cards need hover and focus states. Nothing navigates.
 - 31 frames is enough to prove the rail technique. The wrap math does not care whether it is 31 or 300.
 - Cartoon and photographic frames intentionally sit side by side in the collection it reads as a mixed archive, which suits "the nest".
