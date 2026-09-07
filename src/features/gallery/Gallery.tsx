@@ -27,7 +27,7 @@ export function Gallery() {
   return (
     <section
       ref={rootRef}
-      className="gallery relative -mt-[6vh] min-h-svh overflow-hidden bg-void py-[72px] pb-20 text-paper max-[960px]:mt-[-1px] max-[960px]:min-h-0 max-[960px]:py-10 max-[960px]:pb-6 max-sm:py-8 max-sm:pb-4"
+      className="gallery relative -mt-[6vh] min-h-svh overflow-hidden bg-void pt-[72px] pb-20 text-paper max-[960px]:mt-[-1px] max-[960px]:min-h-0 max-[960px]:pt-10 max-[960px]:pb-[100px] max-sm:pt-8"
       id="gallery"
     >
       <StarField
