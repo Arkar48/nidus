@@ -1,0 +1,96 @@
+.hero__layer {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+  will-change: transform;
+  user-select: none;
+}
+
+.hero__layer--planet {
+  right: -4%;
+  left: auto;
+  top: 4%;
+  width: min(52vw, 640px);
+  margin-left: 0;
+  z-index: 2;
+  opacity: 1;
+  transform-origin: 50% 50%;
+}
+
+.hero__layer--land {
+  left: 50%;
+  bottom: -8%;
+  width: min(130vw, 1600px);
+  margin-left: calc(min(130vw, 1600px) / -2);
+  z-index: 4;
+}
+
+.hero__fade {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 40%,
+    rgba(0, 0, 0, 0.85) 75%,
+    var(--void) 100%
+  );
+}
+
+@media (max-width: 960px) {
+  .hero__layer--planet {
+    width: min(42vw, 190px);
+    right: 4%;
+    top: 22%;
+    bottom: auto;
+    z-index: 3;
+  }
+
+  .hero__layer--land {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    margin-left: 0;
+    height: auto;
+    z-index: 5;
+    display: block;
+  }
+
+  .hero__layer--land .hero__layer-shift {
+    width: 100%;
+    height: auto;
+    line-height: 0;
+  }
+
+  .hero__layer--land img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  .hero__fade {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.45) 55%,
+      var(--void) 100%
+    );
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__layer--planet {
+    width: min(44vw, 160px);
+    right: 3%;
+    top: 20%;
+  }
+
+  .hero__layer--land {
+    bottom: 0;
+    width: 115%;
+    left: 50%;
+    right: auto;
+    margin-left: -57.5%;
+  }
+}

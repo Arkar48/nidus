@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syncopate:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f4f1ea;
+  --color-ink: #111110;
+  --color-mist: #8a857c;
+  --color-mist-soft: #9a958c;
+  --color-mist-warm: #b7b1a6;
+  --color-mist-dim: #6e6a63;
+  --color-copy: #cfc9bd;
+  --color-line: #d9d4c8;
+  --color-void: #000000;
+  --color-void-soft: #0a0a0a;
+  --color-veil: #ffffff;
+  --color-accent: #c45c2a;
+  --color-ember: #e05a32;
+  --color-scrim: #000000b8;
+  --color-pink-focus: #ff4fb8;
+
+  --font-display: 'Syncopate', sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+}
+
+/* Unprefixed aliases so the section CSS can use var(--void) etc. */
+:root {
+  --paper: var(--color-paper);
+  --ink: var(--color-ink);
+  --mist: var(--color-mist);
+  --mist-soft: var(--color-mist-soft);
+  --mist-warm: var(--color-mist-warm);
+  --mist-dim: var(--color-mist-dim);
+  --copy: var(--color-copy);
+  --line: var(--color-line);
+  --void: var(--color-void);
+  --void-soft: var(--color-void-soft);
+  --void-alpha: #000a;
+  --veil: var(--color-veil);
+  --veil-soft: #fff8;
+  --accent: var(--color-accent);
+  --ember: var(--color-ember);
+  --ember-glow: #e05a3266;
+  --ember-soft: #e05a3222;
+  --ember-seam: #e05a3244;
+  --paper-faint: #f4f1ea33;
+  --star: #ffffff;
+  --star-soft: #ffffff55;
+  --star-warm: #ffe6c4;
+  --star-glow: #ffffffaa;
+  --star-trail: #ffd7a044;
+  --veil-12: #ffffff12;
+  --veil-14: #ffffff14;
+  --veil-18: #ffffff18;
+  --veil-1a: #ffffff1a;
+  --veil-22: #ffffff22;
+  --veil-10: #ffffff10;
+  --shadow-mid: #00000066;
+  --ring-track: #ffffff14;
+  --scrim: var(--color-scrim);
+  --shadow-deep: #000000cc;
+  --shadow-soft: #000000aa;
+  --pink-focus: var(--color-pink-focus);
+  --loader-glow-a: #2a1230;
+  --loader-glow-b: #1a0e14;
+}
+
+@import "./foundation/base.css";
+@import "./foundation/keyframes.css";
+
+@import "./sections/loader.css";
+@import "./sections/hero.css";
+
+@import "./foundation/reduced-motion.css";

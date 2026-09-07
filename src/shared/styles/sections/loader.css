@@ -1,0 +1,16 @@
+.gate__track {
+  background: var(--veil-10);
+  height: 1px;
+}
+
+.gate__fill {
+  box-shadow: 0 0 12px var(--ember-glow);
+  transition: transform 80ms linear;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate__fill {
+    transition: none;
+  }
+}

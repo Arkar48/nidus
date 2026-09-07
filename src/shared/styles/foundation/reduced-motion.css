@@ -1,0 +1,26 @@
+@media (prefers-reduced-motion: reduce) {
+  .space-card,
+  .space-detail__trait {
+    transition: none !important;
+  }
+
+  .hero__layer,
+  .hero__layer-shift,
+  .gallery__star,
+  .hero__star,
+  .hero__shoot,
+  .gallery__shoot {
+    will-change: auto;
+  }
+
+  .gallery__star,
+  .hero__star {
+    animation: none !important;
+    opacity: 0.45;
+  }
+
+  .hero__shoot,
+  .gallery__shoot {
+    display: none;
+  }
+}

@@ -1,0 +1,54 @@
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(0.7);
+  }
+  40% {
+    opacity: 0.95;
+    transform: scale(1.35);
+  }
+  70% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+}
+
+.hero__star,
+.gallery__star {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--veil);
+  opacity: 0.22;
+  animation-name: starTwinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.hero__star,
+.gallery__star {
+  box-shadow: 0 0 6px var(--star-glow);
+}
+.hero__shoot,
+.gallery__shoot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: 48px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--star-soft) 18%,
+    var(--veil) 55%,
+    var(--star-warm) 78%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px var(--star-glow), 0 0 16px var(--star-trail);
+  will-change: transform, opacity;
+}
